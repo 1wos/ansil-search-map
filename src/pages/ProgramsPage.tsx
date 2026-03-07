@@ -1,13 +1,24 @@
 import { useState, useMemo } from "react";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search, SlidersHorizontal, Home, Shield, Heart, ShoppingBag, Users } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProgramCard } from "@/components/ProgramCard";
+import { PortalCards } from "@/components/PortalCards";
 import { usePrograms, useRegionCities } from "@/hooks/usePrograms";
 
-const categoryList = ["주거안전", "귀가안전", "생활지원", "건강", "커뮤니티"];
+const categoryList = [
+  { key: "주거안전", icon: Home },
+  { key: "귀가안전", icon: Shield },
+  { key: "건강", icon: Heart },
+  { key: "생활지원", icon: ShoppingBag },
+  { key: "커뮤니티", icon: Users },
+];
+
+const regionList = ["전체", "서울특별시", "경기도", "인천광역시", "대구광역시", "광주광역시", "울산광역시"];
+
+const applyMethodList = ["전체", "온라인", "전화", "앱", "방문"];
 
 const categoryChipActive: Record<string, string> = {
   주거안전: "bg-sky-mid text-white",
@@ -28,6 +39,7 @@ const categoryChipInactive: Record<string, string> = {
 const ProgramsPage = () => {
   const [regionFilter, setRegionFilter] = useState("all");
   const [activeCategories, setActiveCategories] = useState<string[]>([]);
+  const [methodFilter, setMethodFilter] = useState("전체");
   const [freeOnly, setFreeOnly] = useState(false);
   const [openOnly, setOpenOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -49,29 +61,57 @@ const ProgramsPage = () => {
   };
 
   const filtered = useMemo(() => {
-    if (activeCategories.length === 0) return programs;
-    return programs.filter((p) => activeCategories.includes(p.category));
-  }, [programs, activeCategories]);
+    let result = programs;
+    if (activeCategories.length > 0) {
+      result = result.filter((p) => activeCategories.includes(p.category));
+    }
+    if (methodFilter !== "전체") {
+      result = result.filter((p) => {
+        const method = (p as any).apply_method as string | null;
+        if (!method) return false;
+        return method.includes(methodFilter);
+      });
+    }
+    return result;
+  }, [programs, activeCategories, methodFilter]);
 
-  const activeFilterCount = activeCategories.length + (freeOnly ? 1 : 0) + (openOnly ? 1 : 0) + (regionFilter !== "all" ? 1 : 0);
+  const activeFilterCount =
+    activeCategories.length +
+    (freeOnly ? 1 : 0) +
+    (openOnly ? 1 : 0) +
+    (regionFilter !== "all" ? 1 : 0) +
+    (methodFilter !== "전체" ? 1 : 0);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background pb-14 md:pb-0">
       <Navbar />
       <main className="flex-1">
         <div className="container py-6 md:py-12">
           <h1 className="mb-4 text-2xl font-bold text-foreground md:mb-6 md:text-3xl">전체 지원제도</h1>
+
+          {/* Portal cards */}
+          <PortalCards />
 
           <div className="mb-6 space-y-3 rounded-2xl border bg-card p-4 shadow-card md:space-y-4 md:p-5">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <select
                 value={regionFilter}
                 onChange={(e) => setRegionFilter(e.target.value)}
-                className="w-full rounded-xl border bg-background px-3 py-2.5 text-sm outline-none focus:border-rose-mid min-h-[44px] sm:w-48"
+                className="w-full rounded-xl border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary min-h-[44px] sm:w-48"
               >
-                <option value="all">전체</option>
+                <option value="all">전체 지역</option>
                 {cities.map((c) => (
                   <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+
+              <select
+                value={methodFilter}
+                onChange={(e) => setMethodFilter(e.target.value)}
+                className="w-full rounded-xl border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary min-h-[44px] sm:w-36"
+              >
+                {applyMethodList.map((m) => (
+                  <option key={m} value={m}>{m === "전체" ? "전체 신청방법" : m}</option>
                 ))}
               </select>
 
@@ -94,7 +134,7 @@ const ProgramsPage = () => {
                 <SlidersHorizontal className="h-4 w-4" />
                 필터
                 {activeFilterCount > 0 && (
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-rose-mid text-xs text-white">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
                     {activeFilterCount}
                   </span>
                 )}
@@ -103,17 +143,18 @@ const ProgramsPage = () => {
 
             <div className={`${filtersExpanded ? "block" : "hidden"} sm:block`}>
               <div className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-x-visible sm:pb-0 scrollbar-hide">
-                {categoryList.map((cat) => (
+                {categoryList.map(({ key, icon: CatIcon }) => (
                   <button
-                    key={cat}
-                    onClick={() => toggleCategory(cat)}
-                    className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-medium transition-colors min-h-[40px] active:scale-95 ${
-                      activeCategories.includes(cat)
-                        ? categoryChipActive[cat]
-                        : categoryChipInactive[cat]
+                    key={key}
+                    onClick={() => toggleCategory(key)}
+                    className={`shrink-0 inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-xs font-medium transition-colors min-h-[40px] active:scale-95 ${
+                      activeCategories.includes(key)
+                        ? categoryChipActive[key]
+                        : categoryChipInactive[key]
                     }`}
                   >
-                    {cat}
+                    <CatIcon className="h-3.5 w-3.5" />
+                    {key}
                   </button>
                 ))}
                 <span className="mx-0.5 hidden h-8 w-px self-center bg-border sm:block" />
@@ -142,7 +183,7 @@ const ProgramsPage = () => {
           </div>
 
           <p className="mb-5 text-sm text-muted-foreground">
-            총 <span className="font-bold text-rose-deep">{filtered.length}</span>건의 지원제도
+            총 <span className="font-bold text-primary">{filtered.length}</span>건의 지원제도
           </p>
 
           {isLoading ? (

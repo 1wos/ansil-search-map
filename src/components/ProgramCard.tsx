@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Home, Shield, Heart, Activity, Users, ChevronDown, ChevronUp, ExternalLink, Phone } from "lucide-react";
+import { Home, Shield, Heart, ShoppingBag, Users, ChevronDown, ChevronUp, ExternalLink, Phone, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Program } from "@/hooks/usePrograms";
 
 export const categoryIcons: Record<string, React.ElementType> = {
-  주거안전: Home, 귀가안전: Shield, 생활지원: Heart, 건강: Activity, 커뮤니티: Users,
+  주거안전: Home, 귀가안전: Shield, 생활지원: ShoppingBag, 건강: Heart, 커뮤니티: Users,
 };
 
 const categoryBadgeClasses: Record<string, string> = {
@@ -14,6 +14,27 @@ const categoryBadgeClasses: Record<string, string> = {
   건강: "bg-coral-light text-coral-deep border border-coral-mid/30",
   커뮤니티: "bg-peach-light text-peach-deep border border-peach-mid/30",
 };
+
+const applyMethodColors: Record<string, string> = {
+  "온라인 신청": "bg-sky-light text-sky-deep border-sky-mid/30",
+  "온라인/전화": "bg-sky-light text-sky-deep border-sky-mid/30",
+  "전화/온라인": "bg-sky-light text-sky-deep border-sky-mid/30",
+  "전화 문의": "bg-coral-light text-coral-deep border-coral-mid/30",
+  "전화/앱 신청": "bg-lav-light text-lav-deep border-lav-mid/30",
+  "앱 신청": "bg-lav-light text-lav-deep border-lav-mid/30",
+  "앱/콜센터": "bg-lav-light text-lav-deep border-lav-mid/30",
+  "행정복지센터 방문": "bg-peach-light text-peach-deep border-peach-mid/30",
+  "가족센터 방문/이메일": "bg-peach-light text-peach-deep border-peach-mid/30",
+  "시청 문의": "bg-peach-light text-peach-deep border-peach-mid/30",
+  "구청 이메일 신청": "bg-sky-light text-sky-deep border-sky-mid/30",
+  "즉시 이용": "bg-rose-light text-rose-deep border-rose-mid/30",
+  "전화/방문": "bg-peach-light text-peach-deep border-peach-mid/30",
+};
+
+function getApplyMethodColor(method: string | null): string {
+  if (!method) return "bg-muted text-muted-foreground";
+  return applyMethodColors[method] || "bg-muted text-muted-foreground";
+}
 
 function Detail({ label, value }: { label: string; value: string }) {
   return (
@@ -30,6 +51,8 @@ export function ProgramCard({ program }: { program: Program }) {
   const badgeClass = categoryBadgeClasses[program.category] || "bg-muted text-muted-foreground";
   const isFree = program.cost === "무료";
   const isOpen = program.status === "신청가능";
+  const applyMethod = (program as any).apply_method as string | null;
+  const portalUrl = (program as any).portal_url as string | null;
 
   return (
     <div className="flex flex-col rounded-2xl border bg-card shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover">
@@ -43,18 +66,21 @@ export function ProgramCard({ program }: { program: Program }) {
         <h3 className="mb-2 text-base font-bold text-card-foreground md:text-lg">{program.name}</h3>
         <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">{program.support_detail}</p>
         <div className="mb-4 flex flex-wrap gap-2">
-          {/* 무료 = sky, 유료 = peach */}
           <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium border ${
             isFree ? "bg-sky-light text-sky-deep border-sky-mid/30" : "bg-peach-light text-peach-deep border-peach-mid/30"
           }`}>
             {program.cost}
           </span>
-          {/* 신청가능 = rose, 마감 = coral */}
           <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium border ${
             isOpen ? "bg-rose-light text-rose-deep border-rose-mid/30" : "bg-coral-light text-coral-deep border-coral-mid/30"
           }`}>
             {isOpen ? "신청가능" : "마감"}
           </span>
+          {applyMethod && (
+            <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium border ${getApplyMethodColor(applyMethod)}`}>
+              {applyMethod}
+            </span>
+          )}
         </div>
         <div className="mt-auto flex items-center gap-2">
           <a href={program.apply_url || "#"} target="_blank" rel="noopener noreferrer" className="flex-1">
@@ -66,6 +92,17 @@ export function ProgramCard({ program }: { program: Program }) {
               신청하기 <ExternalLink className="h-3.5 w-3.5" />
             </Button>
           </a>
+          {portalUrl && (
+            <a href={portalUrl} target="_blank" rel="noopener noreferrer">
+              <Button
+                size="sm"
+                variant="outline"
+                className="gap-1 min-h-[44px] min-w-[44px] rounded-xl border-sky-mid/30 text-sky-deep hover:bg-sky-light"
+              >
+                <Globe className="h-3.5 w-3.5" />
+              </Button>
+            </a>
+          )}
           <Button
             size="sm"
             variant="ghost"
@@ -79,6 +116,7 @@ export function ProgramCard({ program }: { program: Program }) {
       {expanded && (
         <div className="border-t bg-muted/30 p-4 text-sm space-y-3 md:p-5">
           <Detail label="신청 방법" value={program.how_to_apply} />
+          {applyMethod && <Detail label="신청 유형" value={applyMethod} />}
           {program.apply_period && <Detail label="신청 기간" value={program.apply_period} />}
           {program.target_age && <Detail label="대상 연령" value={program.target_age} />}
           <Detail label="대상" value={`${program.target_gender || ''} ${program.target_household || ''}`} />

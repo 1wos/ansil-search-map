@@ -83,6 +83,33 @@ export type Database = {
           },
         ]
       }
+      portals: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          portal_name: string
+          region: string
+          url: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          portal_name: string
+          region: string
+          url: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          portal_name?: string
+          region?: string
+          url?: string
+        }
+        Relationships: []
+      }
       program_embeddings: {
         Row: {
           content: string
@@ -114,6 +141,7 @@ export type Database = {
       }
       programs: {
         Row: {
+          apply_method: string | null
           apply_period: string | null
           apply_url: string | null
           category: string
@@ -124,6 +152,7 @@ export type Database = {
           id: string
           keywords: string[] | null
           name: string
+          portal_url: string | null
           region_city: string
           region_district: string
           source_url: string | null
@@ -136,6 +165,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          apply_method?: string | null
           apply_period?: string | null
           apply_url?: string | null
           category: string
@@ -146,6 +176,7 @@ export type Database = {
           id: string
           keywords?: string[] | null
           name: string
+          portal_url?: string | null
           region_city: string
           region_district?: string
           source_url?: string | null
@@ -158,6 +189,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          apply_method?: string | null
           apply_period?: string | null
           apply_url?: string | null
           category?: string
@@ -168,6 +200,7 @@ export type Database = {
           id?: string
           keywords?: string[] | null
           name?: string
+          portal_url?: string | null
           region_city?: string
           region_district?: string
           source_url?: string | null
@@ -181,11 +214,56 @@ export type Database = {
         }
         Relationships: []
       }
+      safety_houses: {
+        Row: {
+          address: string | null
+          fetched_at: string | null
+          id: number
+          latitude: number | null
+          longitude: number | null
+          name: string | null
+          operating_hours: string | null
+          region_city: string | null
+        }
+        Insert: {
+          address?: string | null
+          fetched_at?: string | null
+          id?: number
+          latitude?: number | null
+          longitude?: number | null
+          name?: string | null
+          operating_hours?: string | null
+          region_city?: string | null
+        }
+        Update: {
+          address?: string | null
+          fetched_at?: string | null
+          id?: number
+          latitude?: number | null
+          longitude?: number | null
+          name?: string | null
+          operating_hours?: string | null
+          region_city?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      get_region_stats: {
+        Args: never
+        Returns: {
+          community_count: number
+          commute_count: number
+          health_count: number
+          living_count: number
+          region_city: string
+          safety_count: number
+          total_count: number
+        }[]
+      }
       match_programs: {
         Args: {
           match_count?: number

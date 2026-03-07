@@ -1,65 +1,119 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Send, ThumbsUp, ThumbsDown, ExternalLink } from "lucide-react";
+import { Send, ThumbsUp, ThumbsDown, ExternalLink, MessageCircle, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/Navbar";
+import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import ReactMarkdown from "react-markdown";
 
-interface ProgramRec {
+interface RecommendedProgram {
+  id: string;
   name: string;
-  region: string;
+  region_city: string;
+  category: string;
+  support_detail: string;
   cost: string;
-  url: string;
+  how_to_apply: string;
+  contact: string | null;
+  apply_url: string | null;
+  source_url: string | null;
 }
 
 interface ChatMessage {
   id: string;
-  role: "user" | "ai";
-  text: string;
-  programs?: ProgramRec[];
-  disclaimer?: string;
+  role: "user" | "assistant";
+  content: string;
   feedback?: "up" | "down" | null;
+  recommended_programs?: RecommendedProgram[];
+  is_emergency?: boolean;
+  chat_log_id?: string | null;
 }
 
 const welcomeMessage: ChatMessage = {
   id: "welcome",
-  role: "ai",
-  text: "안녕하세요! 여성 1인가구 안심지원 AI입니다 🏠\n\n거주 지역과 상황을 알려주시면 맞춤 지원제도를 찾아드릴게요.",
+  role: "assistant",
+  content: "안녕하세요! 여성 1인가구 안심지원 AI **안심이**입니다 🏠\n\n거주 지역과 상황을 알려주시면 맞춤 지원제도를 찾아드릴게요.",
 };
 
 const exampleChips = [
-  "관악구에 혼자 이사했는데 현관이 불안해요",
-  "대전에서 혼자 사는데 지원 뭐가 있어요?",
-  "밤에 혼자 귀가하는 게 무서워요",
-  "혼자 아파서 병원 가기 힘들어요",
+  "서울에서 받을 수 있는 안심홈 지원은?",
+  "1인가구 생활비 지원 프로그램 알려줘",
+  "야간 귀가 안전 서비스가 뭐가 있어?",
+  "혼자 아플 때 도움받을 수 있는 서비스는?",
 ];
 
-function mockAiResponse(userText: string): ChatMessage {
-  return {
-    id: Date.now().toString() + "-ai",
-    role: "ai",
-    text: userText.includes("귀가")
-      ? "야간 귀가가 걱정되시군요. 이런 지원제도가 있어요:"
-      : userText.includes("병원") || userText.includes("아파")
-      ? "혼자 아플 때 도움이 되는 서비스들이에요:"
-      : userText.includes("대전")
-      ? "대전광역시에서 이용 가능한 지원제도를 찾았어요:"
-      : "관악구 여성 1인가구라면 이런 지원을 받을 수 있어요:",
-    programs: [
-      { name: "안심홈 3종세트", region: "관악구", cost: "무료", url: "https://www.seoul.go.kr" },
-      { name: "안전 도어지킴이", region: "서울 전체", cost: "월 9,900원", url: "https://www.seoul.go.kr" },
-    ],
-    disclaimer: "ℹ️ 정확한 자격 여부는 해당 기관에 직접 확인해주세요.",
-    feedback: null,
-  };
+const categoryBadgeColors: Record<string, string> = {
+  주거안전: "bg-sky-light text-sky-deep",
+  귀가안전: "bg-lav-light text-lav-deep",
+  생활지원: "bg-rose-light text-rose-deep",
+  건강: "bg-coral-light text-coral-deep",
+  커뮤니티: "bg-peach-light text-peach-deep",
+};
+
+function getSessionId(): string {
+  let sid = sessionStorage.getItem("chat_session_id");
+  if (!sid) {
+    sid = crypto.randomUUID();
+    sessionStorage.setItem("chat_session_id", sid);
+  }
+  return sid;
 }
 
 function TypingIndicator() {
   return (
     <div className="flex items-start gap-2">
-      <div className="flex items-center gap-1 rounded-2xl rounded-tl-sm bg-card border px-4 py-3 shadow-card">
-        <span className="h-2 w-2 animate-bounce rounded-full bg-rose-mid/40" style={{ animationDelay: "0ms" }} />
-        <span className="h-2 w-2 animate-bounce rounded-full bg-lav-mid/40" style={{ animationDelay: "150ms" }} />
-        <span className="h-2 w-2 animate-bounce rounded-full bg-peach-mid/40" style={{ animationDelay: "300ms" }} />
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-rose-mid to-peach-mid">
+        <MessageCircle className="h-4 w-4 text-white" />
+      </div>
+      <div className="flex items-center gap-1 rounded-2xl rounded-tl-sm border bg-card px-4 py-3 shadow-card">
+        <span className="text-xs text-muted-foreground mr-2">찾고 있어요...</span>
+        <span className="h-2 w-2 animate-bounce rounded-full bg-lav-mid" style={{ animationDelay: "0ms" }} />
+        <span className="h-2 w-2 animate-bounce rounded-full bg-rose-mid" style={{ animationDelay: "150ms" }} />
+        <span className="h-2 w-2 animate-bounce rounded-full bg-peach-mid" style={{ animationDelay: "300ms" }} />
+      </div>
+    </div>
+  );
+}
+
+function ProgramCard({ program }: { program: RecommendedProgram }) {
+  const badgeClass = categoryBadgeColors[program.category] || "bg-muted text-muted-foreground";
+  const phone = program.contact?.match(/[\d-]{7,}/)?.[0];
+
+  return (
+    <div className="rounded-xl border bg-card p-3 shadow-card transition-shadow hover:shadow-card-hover">
+      <div className="mb-2 flex items-center gap-2">
+        <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${badgeClass}`}>
+          {program.category}
+        </span>
+        <span className="text-[10px] text-muted-foreground">{program.region_city}</span>
+      </div>
+      <h4 className="mb-1 text-sm font-semibold text-foreground">{program.name}</h4>
+      <p className="mb-2 line-clamp-2 text-xs text-muted-foreground">{program.support_detail}</p>
+      <div className="mb-2 flex items-center gap-2">
+        <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${program.cost === "무료" ? "bg-sky-light text-sky-deep" : "bg-peach-light text-peach-deep"}`}>
+          {program.cost === "무료" ? "무료" : program.cost}
+        </span>
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        {program.apply_url && (
+          <a href={program.apply_url} target="_blank" rel="noopener noreferrer"
+            className="inline-flex min-h-[36px] items-center gap-1 rounded-lg bg-rose-mid px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-rose-deep">
+            신청하기 <ExternalLink className="h-3 w-3" />
+          </a>
+        )}
+        {phone && (
+          <a href={`tel:${phone}`}
+            className="inline-flex min-h-[36px] items-center gap-1 rounded-lg border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted">
+            📞 {phone}
+          </a>
+        )}
+        {program.source_url && (
+          <a href={program.source_url} target="_blank" rel="noopener noreferrer"
+            className="text-[10px] text-muted-foreground underline hover:text-foreground">
+            출처
+          </a>
+        )}
       </div>
     </div>
   );
@@ -75,47 +129,68 @@ function MessageBubble({
   const isUser = message.role === "user";
 
   return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-      <div className={`max-w-[85%] md:max-w-[75%] space-y-3`}>
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"} gap-2`}>
+      {!isUser && (
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-rose-mid to-peach-mid mt-1">
+          <MessageCircle className="h-4 w-4 text-white" />
+        </div>
+      )}
+      <div className="max-w-[85%] space-y-3 md:max-w-[75%]">
+        {message.is_emergency && (
+          <div className="flex items-center gap-2 rounded-xl bg-destructive/10 border border-destructive/30 px-4 py-3">
+            <AlertTriangle className="h-5 w-5 shrink-0 text-destructive" />
+            <div className="text-sm font-semibold text-destructive">
+              🚨 긴급 연락처: <a href="tel:112" className="underline">경찰 112</a> | <a href="tel:1366" className="underline">여성긴급전화 1366</a>
+            </div>
+          </div>
+        )}
+
         <div
-          className={`rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
+          className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
             isUser
               ? "rounded-tr-sm bg-rose-light text-card-foreground"
-              : "rounded-tl-sm border bg-card text-card-foreground shadow-card"
+              : "rounded-tl-sm border border-rose-light/50 bg-card text-card-foreground shadow-card"
           }`}
         >
-          {message.text}
+          {isUser ? (
+            message.content
+          ) : (
+            <div className="prose prose-sm max-w-none">
+              <ReactMarkdown
+                components={{
+                  strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                  ul: ({ children }) => <ul className="list-disc pl-4 my-1">{children}</ul>,
+                  ol: ({ children }) => <ol className="list-decimal pl-4 my-1">{children}</ol>,
+                  li: ({ children }) => <li className="mb-0.5">{children}</li>,
+                  p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                  h3: ({ children }) => <h3 className="font-bold text-base mt-2 mb-1">{children}</h3>,
+                  h2: ({ children }) => <h2 className="font-bold text-base mt-3 mb-1">{children}</h2>,
+                  a: ({ href, children }) => (
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="text-sky-deep underline">
+                      {children}
+                    </a>
+                  ),
+                }}
+              >
+                {message.content}
+              </ReactMarkdown>
+            </div>
+          )}
         </div>
 
-        {message.programs && (
+        {message.recommended_programs && message.recommended_programs.length > 0 && (
           <div className="space-y-2">
-            {message.programs.map((p) => (
-              <div key={p.name} className="flex items-center justify-between gap-2 rounded-2xl border bg-card p-3 shadow-card">
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold text-card-foreground">{p.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {p.region} · <span className={p.cost === "무료" ? "text-sky-deep" : "text-peach-deep"}>{p.cost}</span>
-                  </p>
-                </div>
-                <a href={p.url} target="_blank" rel="noopener noreferrer">
-                  <Button size="sm" variant="outline" className="shrink-0 gap-1 text-xs text-rose-mid hover:bg-rose-light hover:text-rose-deep min-h-[44px] min-w-[44px] rounded-xl">
-                    신청 <ExternalLink className="h-3 w-3" />
-                  </Button>
-                </a>
-              </div>
+            {message.recommended_programs.map((p) => (
+              <ProgramCard key={p.id} program={p} />
             ))}
           </div>
         )}
 
-        {message.disclaimer && (
-          <p className="text-xs text-muted-foreground">{message.disclaimer}</p>
-        )}
-
-        {message.role === "ai" && message.id !== "welcome" && onFeedback && (
+        {message.role === "assistant" && message.id !== "welcome" && onFeedback && (
           <div className="flex items-center gap-1">
             <button
               onClick={() => onFeedback(message.id, "up")}
-              className={`rounded-xl p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors ${
+              className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl p-2.5 transition-colors ${
                 message.feedback === "up" ? "bg-sky-light text-sky-deep" : "text-muted-foreground/40 hover:text-muted-foreground"
               }`}
             >
@@ -123,7 +198,7 @@ function MessageBubble({
             </button>
             <button
               onClick={() => onFeedback(message.id, "down")}
-              className={`rounded-xl p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors ${
+              className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl p-2.5 transition-colors ${
                 message.feedback === "down" ? "bg-coral-light text-coral-deep" : "text-muted-foreground/40 hover:text-muted-foreground"
               }`}
             >
@@ -145,19 +220,16 @@ const ChatPage = () => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const autoSentRef = useRef(false);
+  const sessionId = useRef(getSessionId());
 
   const scrollToBottom = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
+  useEffect(() => { scrollToBottom(); }, [messages, isTyping]);
 
   useEffect(() => {
-    const handleResize = () => {
-      setTimeout(scrollToBottom, 100);
-    };
+    const handleResize = () => setTimeout(scrollToBottom, 100);
     if (window.visualViewport) {
       window.visualViewport.addEventListener("resize", handleResize);
       return () => window.visualViewport?.removeEventListener("resize", handleResize);
@@ -165,15 +237,10 @@ const ChatPage = () => {
   }, []);
 
   const sendMessage = useCallback(
-    (text: string) => {
+    async (text: string) => {
       if (!text.trim() || isTyping) return;
 
-      const userMsg: ChatMessage = {
-        id: Date.now().toString(),
-        role: "user",
-        text: text.trim(),
-      };
-
+      const userMsg: ChatMessage = { id: Date.now().toString(), role: "user", content: text.trim() };
       setMessages((prev) => [...prev, userMsg]);
       setInput("");
       setChipsVisible(false);
@@ -183,10 +250,34 @@ const ChatPage = () => {
         inputRef.current?.blur();
       }
 
-      setTimeout(() => {
+      try {
+        const { data, error } = await supabase.functions.invoke("chat", {
+          body: { message: text.trim(), session_id: sessionId.current },
+        });
+
+        if (error) throw error;
+
+        const assistantMsg: ChatMessage = {
+          id: Date.now().toString() + "-ai",
+          role: "assistant",
+          content: data.message,
+          feedback: null,
+          recommended_programs: data.recommended_programs,
+          is_emergency: data.is_emergency,
+          chat_log_id: data.chat_log_id,
+        };
+
+        setMessages((prev) => [...prev, assistantMsg]);
+      } catch (e: any) {
+        console.error("Chat error:", e);
+        toast({
+          title: "오류",
+          description: "죄송합니다. 잠시 후 다시 시도해주세요.",
+          variant: "destructive",
+        });
+      } finally {
         setIsTyping(false);
-        setMessages((prev) => [...prev, mockAiResponse(text)]);
-      }, 2000);
+      }
     },
     [isTyping]
   );
@@ -204,16 +295,27 @@ const ChatPage = () => {
     sendMessage(input);
   };
 
-  const handleFeedback = (id: string, type: "up" | "down") => {
+  const handleFeedback = async (id: string, type: "up" | "down") => {
     setMessages((prev) =>
       prev.map((m) => (m.id === id ? { ...m, feedback: m.feedback === type ? null : type } : m))
     );
+
+    const msg = messages.find((m) => m.id === id);
+    if (msg?.chat_log_id) {
+      try {
+        await supabase.from("feedback").insert({
+          chat_log_id: msg.chat_log_id,
+          rating: type === "up" ? 5 : 1,
+        });
+      } catch (e) {
+        console.error("Feedback error:", e);
+      }
+    }
   };
 
   return (
     <div className="flex h-[100dvh] flex-col bg-background">
       <Navbar />
-
       <div className="flex flex-1 flex-col overflow-hidden">
         <div className="flex-1 overflow-y-auto overscroll-contain">
           <div className="mx-auto max-w-3xl space-y-4 px-4 py-4 pb-2 md:py-6">
@@ -222,12 +324,12 @@ const ChatPage = () => {
             ))}
 
             {chipsVisible && messages.length === 1 && (
-              <div className="flex flex-wrap gap-2 pl-0">
+              <div className="flex flex-wrap gap-2 pl-10">
                 {exampleChips.map((chip) => (
                   <button
                     key={chip}
                     onClick={() => sendMessage(chip)}
-                    className="rounded-full border bg-card px-3.5 py-2.5 text-xs text-card-foreground transition-all hover:-translate-y-0.5 hover:shadow-card-hover active:scale-95 min-h-[44px]"
+                    className="min-h-[44px] rounded-full border bg-card px-3.5 py-2.5 text-xs text-card-foreground transition-all hover:-translate-y-0.5 hover:shadow-card-hover active:scale-95"
                   >
                     {chip}
                   </button>
@@ -240,14 +342,14 @@ const ChatPage = () => {
           </div>
         </div>
 
-        <div className="border-t bg-card pb-[env(safe-area-inset-bottom)]">
+        <div className="border-t bg-card pb-[env(safe-area-inset-bottom)] mb-[52px] md:mb-0">
           <form onSubmit={handleSubmit} className="mx-auto flex max-w-3xl items-center gap-2 px-4 py-3">
             <input
               ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="궁금한 점을 물어보세요..."
-              className="flex-1 rounded-xl border bg-background px-4 py-3 text-base outline-none transition-colors placeholder:text-muted-foreground focus:border-rose-mid focus:ring-1 focus:ring-rose-mid min-h-[44px]"
+              className="min-h-[44px] flex-1 rounded-xl border bg-background px-4 py-3 text-base outline-none transition-colors placeholder:text-muted-foreground focus:border-rose-mid focus:ring-1 focus:ring-rose-mid"
               disabled={isTyping}
               enterKeyHint="send"
               autoComplete="off"
@@ -256,7 +358,7 @@ const ChatPage = () => {
               type="submit"
               size="icon"
               disabled={!input.trim() || isTyping}
-              className="shrink-0 rounded-xl bg-gradient-cta text-white hover:opacity-90 min-h-[44px] min-w-[44px]"
+              className="min-h-[44px] min-w-[44px] shrink-0 rounded-xl bg-gradient-cta text-white hover:opacity-90"
             >
               <Send className="h-4 w-4" />
             </Button>
