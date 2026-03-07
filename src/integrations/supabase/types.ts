@@ -14,7 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      programs: {
+        Row: {
+          apply_period: string | null
+          apply_url: string | null
+          category: string
+          contact: string | null
+          cost: string
+          created_at: string
+          how_to_apply: string
+          id: string
+          keywords: string[] | null
+          name: string
+          region_city: string
+          region_district: string
+          source_url: string | null
+          status: string | null
+          support_detail: string
+          target_age: string | null
+          target_gender: string | null
+          target_household: string | null
+          target_income: string | null
+          updated_at: string
+        }
+        Insert: {
+          apply_period?: string | null
+          apply_url?: string | null
+          category: string
+          contact?: string | null
+          cost: string
+          created_at?: string
+          how_to_apply: string
+          id: string
+          keywords?: string[] | null
+          name: string
+          region_city: string
+          region_district?: string
+          source_url?: string | null
+          status?: string | null
+          support_detail: string
+          target_age?: string | null
+          target_gender?: string | null
+          target_household?: string | null
+          target_income?: string | null
+          updated_at?: string
+        }
+        Update: {
+          apply_period?: string | null
+          apply_url?: string | null
+          category?: string
+          contact?: string | null
+          cost?: string
+          created_at?: string
+          how_to_apply?: string
+          id?: string
+          keywords?: string[] | null
+          name?: string
+          region_city?: string
+          region_district?: string
+          source_url?: string | null
+          status?: string | null
+          support_detail?: string
+          target_age?: string | null
+          target_gender?: string | null
+          target_household?: string | null
+          target_income?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
