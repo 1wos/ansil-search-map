@@ -1,7 +1,5 @@
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
-import { StatsSection } from "@/components/StatsSection";
-import { MapPlaceholder } from "@/components/MapPlaceholder";
 import { Footer } from "@/components/Footer";
 
 const Index = () => {
@@ -10,8 +8,6 @@ const Index = () => {
       <Navbar />
       <main className="flex-1">
         <HeroSection />
-        <StatsSection />
-        <MapPlaceholder />
       </main>
       <Footer />
     </div>
