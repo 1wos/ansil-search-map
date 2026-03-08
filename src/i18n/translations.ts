@@ -318,6 +318,8 @@ const vi: Record<TranslationKey, string> = {
   "ai.chip3": "Chương trình hỗ trợ ở Daejeon",
   "ai.chip4": "Giúp đỡ khi ốm và sống một mình",
 
+  "fab.help": "Bạn cần giúp đỡ?",
+
   "map.title": "Bản Đồ Toàn Quốc",
   "map.subtitle": "Nhấp vào khu vực để xem chương trình hỗ trợ",
   "map.loading": "Đang tải dữ liệu...",
