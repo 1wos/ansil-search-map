@@ -592,6 +592,17 @@ const zh: Record<TranslationKey, string> = {
   "analytics.source": "数据来源：公共数据门户、各地方政府网站、生活法令信息",
   "analytics.updated": "最后更新：2026年3月",
 
+  "safety.tab_title": "安心设施",
+  "safety.tab_programs": "支援制度",
+  "safety.lockers": "安心快递柜",
+  "safety.guardians": "安心守护站",
+  "safety.operating": "运营中",
+  "safety.closed": "未运营",
+  "safety.weekday_hours": "工作日",
+  "safety.total_facilities": "安心设施",
+  "safety.places_suffix": "处",
+  "safety.no_facilities": "该地区暂无登记的安心设施。",
+
   "notfound.title": "404",
   "notfound.message": "页面未找到",
   "notfound.back": "返回首页",
