@@ -17,7 +17,7 @@ const STAT_MAP: Record<string, string> = {
 };
 
 function shorten(name: string) {
-  return name.replace(/특별시|광역시|특별자치시|특별자치도/g, "").replace(/도$/, "");
+  return name.replace(/특별시|광역시|특별자치시|특별자치도/g, "");
 }
 
 function useAllPrograms() {
