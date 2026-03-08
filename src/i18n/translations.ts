@@ -446,6 +446,17 @@ const vi: Record<TranslationKey, string> = {
   "analytics.source": "Nguồn: Cổng dữ liệu công, Trang web chính quyền",
   "analytics.updated": "Cập nhật: Tháng 3/2026",
 
+  "safety.tab_title": "Cơ sở an toàn",
+  "safety.tab_programs": "Chương trình",
+  "safety.lockers": "Tủ gửi đồ an toàn",
+  "safety.guardians": "Nhà bảo vệ an toàn",
+  "safety.operating": "Đang hoạt động",
+  "safety.closed": "Ngừng hoạt động",
+  "safety.weekday_hours": "Ngày thường",
+  "safety.total_facilities": "Cơ sở an toàn",
+  "safety.places_suffix": " nơi",
+  "safety.no_facilities": "Không có cơ sở an toàn nào trong khu vực này.",
+
   "notfound.title": "404",
   "notfound.message": "Không tìm thấy trang",
   "notfound.back": "Về trang chủ",
