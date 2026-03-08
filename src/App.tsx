@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import RegionDetail from "./pages/RegionDetail";
 import ChatPage from "./pages/ChatPage";
 import ProgramsPage from "./pages/ProgramsPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 import NotFound from "./pages/NotFound";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/region/:cityName" element={<RegionDetail />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/programs" element={<ProgramsPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

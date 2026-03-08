@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Home, MessageCircle, Map, List } from "lucide-react";
+import { Menu, X, Home, MessageCircle, Map, List, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -14,6 +14,7 @@ export function Navbar() {
     { label: t("nav.ai_chat"), href: "/chat", icon: MessageCircle },
     { label: t("nav.map"), href: "/map", icon: Map },
     { label: t("nav.programs"), href: "/programs", icon: List },
+    { label: t("nav.analytics"), href: "/analytics", icon: BarChart3 },
   ];
 
   useEffect(() => {

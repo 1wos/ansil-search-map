@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { MapDashboard } from "@/components/MapDashboard";
+import { DashboardCharts } from "@/components/DashboardCharts";
 import { AISearchSection } from "@/components/AISearchSection";
 import { Footer } from "@/components/Footer";
 
@@ -12,6 +13,7 @@ const Index = () => {
         <HeroSection />
         <AISearchSection />
         <MapDashboard />
+        <DashboardCharts />
       </main>
       <Footer />
     </div>
