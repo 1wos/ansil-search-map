@@ -35,6 +35,9 @@ const ko = {
   "ai.chip3": "대전 지원제도",
   "ai.chip4": "혼자 병원 가기 힘들어요",
 
+  // Floating action button
+  "fab.help": "도움이 필요하신가요?",
+
   // Map
   "map.title": "전국 지도로 한눈에",
   "map.subtitle": "관심 지역을 클릭하면 해당 지역의 지원제도를 확인할 수 있어요",
@@ -180,6 +183,8 @@ const en: Record<TranslationKey, string> = {
   "ai.chip3": "Support programs in Daejeon",
   "ai.chip4": "Help when I'm sick and alone",
 
+  "fab.help": "Need help?",
+
   "map.title": "Nationwide Map at a Glance",
   "map.subtitle": "Click a region to see its support programs",
   "map.loading": "Loading data...",
@@ -313,6 +318,8 @@ const vi: Record<TranslationKey, string> = {
   "ai.chip3": "Chương trình hỗ trợ ở Daejeon",
   "ai.chip4": "Giúp đỡ khi ốm và sống một mình",
 
+  "fab.help": "Bạn cần giúp đỡ?",
+
   "map.title": "Bản Đồ Toàn Quốc",
   "map.subtitle": "Nhấp vào khu vực để xem chương trình hỗ trợ",
   "map.loading": "Đang tải dữ liệu...",
@@ -445,6 +452,8 @@ const zh: Record<TranslationKey, string> = {
   "ai.chip2": "晚上回家很害怕",
   "ai.chip3": "大田支援制度",
   "ai.chip4": "一个人生病时的帮助",
+
+  "fab.help": "需要帮助吗？",
 
   "map.title": "全国地图一览",
   "map.subtitle": "点击地区查看支援制度",
