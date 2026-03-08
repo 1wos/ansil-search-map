@@ -3,17 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { MessageCircle, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-const exampleQuestions = [
-  "관악구 안심홈세트 알려줘",
-  "밤에 귀가가 무서워요",
-  "대전 지원제도",
-  "혼자 병원 가기 힘들어요",
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function AISearchSection() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
+  const { t } = useLanguage();
+
+  const exampleQuestions = [t("ai.chip1"), t("ai.chip2"), t("ai.chip3"), t("ai.chip4")];
 
   const go = (text: string) => navigate(`/chat?q=${encodeURIComponent(text)}`);
 
@@ -27,10 +24,10 @@ export function AISearchSection() {
       <div className="container mx-auto max-w-2xl px-4 text-center">
         <MessageCircle className="mx-auto mb-4 h-8 w-8 text-white" />
         <h2 className="mb-2 text-xl font-bold text-white md:text-3xl">
-          나에게 맞는 지원제도, AI가 찾아드려요
+          {t("ai.title")}
         </h2>
         <p className="mb-6 text-sm text-white/70 md:mb-8">
-          궁금한 점을 자유롭게 물어보세요
+          {t("ai.subtitle")}
         </p>
 
         <form onSubmit={handleSubmit} className="mb-6 flex items-center gap-2 rounded-xl bg-card p-2 shadow-card-hover">
@@ -38,11 +35,11 @@ export function AISearchSection() {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="어떤 도움이 필요하신가요?"
+            placeholder={t("ai.placeholder")}
             className="border-0 bg-transparent text-base shadow-none focus-visible:ring-0 min-h-[44px]"
           />
           <Button type="submit" className="shrink-0 rounded-xl bg-gradient-cta text-white hover:opacity-90 min-h-[44px]">
-            검색
+            {t("ai.search")}
           </Button>
         </form>
 

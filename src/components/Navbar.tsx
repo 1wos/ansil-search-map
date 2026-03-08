@@ -2,16 +2,19 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Home, MessageCircle, Map, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const navItems = [
-  { label: "AI 상담", href: "/chat", icon: MessageCircle },
-  { label: "지도", href: "/map", icon: Map },
-  { label: "지원제도", href: "/programs", icon: List },
-];
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const navItems = [
+    { label: t("nav.ai_chat"), href: "/chat", icon: MessageCircle },
+    { label: t("nav.map"), href: "/map", icon: Map },
+    { label: t("nav.programs"), href: "/programs", icon: List },
+  ];
 
   useEffect(() => {
     setOpen(false);
@@ -30,12 +33,11 @@ export function Navbar() {
 
   return (
     <>
-      {/* Top navbar */}
       <header className="sticky top-0 z-50 border-b bg-white/85 backdrop-blur-md">
         <div className="container flex h-14 items-center justify-between md:h-16">
           <Link to="/chat" className="flex items-center gap-2">
             <Home className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold text-foreground">안심찾기</span>
+            <span className="text-xl font-bold text-foreground">{t("nav.home")}</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
@@ -57,15 +59,18 @@ export function Navbar() {
             })}
           </nav>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden min-h-[44px] min-w-[44px]"
-            onClick={() => setOpen(!open)}
-            aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+          <div className="flex items-center gap-1">
+            <LanguageSelector />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden min-h-[44px] min-w-[44px]"
+              onClick={() => setOpen(!open)}
+              aria-label={open ? t("nav.menu_close") : t("nav.menu_open")}
+            >
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
 
         <div
@@ -105,7 +110,6 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Bottom navigation bar (mobile) */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-card/95 backdrop-blur-md md:hidden pb-[env(safe-area-inset-bottom)]">
         <div className="flex items-center justify-around">
           {navItems.map((item) => {
