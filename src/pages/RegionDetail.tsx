@@ -108,6 +108,8 @@ const RegionDetail = () => {
             </div>
           )}
 
+          <RegionRadarChart regionCity={regionCity} />
+
           <div className="mb-4 -mx-4 px-4 md:mx-0 md:px-0 md:mb-6">
             <div className="flex gap-2 overflow-x-auto pb-1 md:flex-wrap md:overflow-x-visible md:pb-0 scrollbar-hide">
               {categories.map((cat) => (

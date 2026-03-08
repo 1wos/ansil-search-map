@@ -14,6 +14,7 @@ export function Navbar() {
     { label: t("nav.ai_chat"), href: "/chat", icon: MessageCircle },
     { label: t("nav.map"), href: "/map", icon: Map },
     { label: t("nav.programs"), href: "/programs", icon: List },
+    { label: t("nav.analytics"), href: "/analytics", icon: BarChart3 },
   ];
 
   useEffect(() => {

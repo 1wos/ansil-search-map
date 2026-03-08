@@ -27,6 +27,7 @@ const App = () => (
           <Route path="/region/:cityName" element={<RegionDetail />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/programs" element={<ProgramsPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
