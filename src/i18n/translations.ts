@@ -183,6 +183,8 @@ const en: Record<TranslationKey, string> = {
   "ai.chip3": "Support programs in Daejeon",
   "ai.chip4": "Help when I'm sick and alone",
 
+  "fab.help": "Need help?",
+
   "map.title": "Nationwide Map at a Glance",
   "map.subtitle": "Click a region to see its support programs",
   "map.loading": "Loading data...",
