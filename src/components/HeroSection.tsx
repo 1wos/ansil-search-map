@@ -1,16 +1,18 @@
 import { Heart, Shield, MapPin } from "lucide-react";
 import { useRegionStats } from "@/hooks/usePrograms";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function HeroSection() {
   const { data } = useRegionStats();
+  const { t } = useLanguage();
 
   const totalPrograms = data?.totalPrograms || 0;
   const totalRegions = data?.stats ? Object.keys(data.stats).length : 0;
 
   const stats = [
-    { icon: Heart, value: "390만+", label: "여성 1인가구", color: "text-rose-deep" },
-    { icon: Shield, value: `${totalPrograms}+`, label: "전국 지원제도", color: "text-sky-deep" },
-    { icon: MapPin, value: `${totalRegions}개`, label: "광역시·도 커버", color: "text-lav-deep" },
+    { icon: Heart, value: "390만+", label: t("hero.stat_women"), color: "text-rose-deep" },
+    { icon: Shield, value: `${totalPrograms}+`, label: t("hero.stat_programs"), color: "text-sky-deep" },
+    { icon: MapPin, value: `${totalRegions}개`, label: t("hero.stat_regions"), color: "text-lav-deep" },
   ];
 
   return (
@@ -21,12 +23,12 @@ export function HeroSection() {
       <div className="container relative">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="mb-4 text-3xl font-bold leading-tight text-foreground md:text-4xl">
-            여성 1인가구 안심지원,
+            {t("hero.title_1")}
             <br />
-            한눈에 보세요
+            {t("hero.title_2")}
           </h1>
           <p className="mb-12 text-base text-muted-foreground md:text-lg">
-            전국 지자체 지원제도를 모아서, AI가 나에게 맞는 걸 찾아드려요
+            {t("hero.subtitle")}
           </p>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">

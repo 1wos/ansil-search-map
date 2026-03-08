@@ -2,12 +2,13 @@ import { useState } from "react";
 import { LeafletMap } from "@/components/LeafletMap";
 import { MapSidePanel } from "@/components/MapSidePanel";
 import { useRegionStats } from "@/hooks/usePrograms";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function MapDashboard() {
   const [selectedRegionName, setSelectedRegionName] = useState<string | null>(null);
   const { data, isLoading } = useRegionStats();
+  const { t } = useLanguage();
 
-  // Build program counts keyed by city name (for LeafletMap)
   const programCounts: Record<string, number> = {};
   if (data?.stats) {
     for (const [city, stat] of Object.entries(data.stats)) {
@@ -23,17 +24,17 @@ export function MapDashboard() {
     <section className="py-12 md:py-16">
       <div className="container">
         <h2 className="mb-2 text-center text-2xl font-bold text-foreground md:text-3xl">
-          전국 지도로 한눈에
+          {t("map.title")}
         </h2>
         <p className="mb-8 text-center text-muted-foreground">
-          관심 지역을 클릭하면 해당 지역의 지원제도를 확인할 수 있어요
+          {t("map.subtitle")}
         </p>
 
         <div className="flex flex-col gap-6 lg:flex-row">
           <div className="w-full lg:w-[60%]">
             <div className="rounded-2xl border bg-card shadow-card overflow-hidden">
               {isLoading ? (
-                <div className="flex h-64 items-center justify-center text-muted-foreground">데이터를 불러오는 중...</div>
+                <div className="flex h-64 items-center justify-center text-muted-foreground">{t("map.loading")}</div>
               ) : (
                 <LeafletMap
                   selectedRegion={selectedRegionName}
