@@ -132,39 +132,6 @@ const AnalyticsPage = () => {
             ))}
           </div>
 
-          {/* Section 2: Lollipop */}
-          <Card className="mb-10 rounded-2xl shadow-card">
-            <CardHeader>
-              <CardTitle className="text-lg">{t("analytics.lollipop_title")}</CardTitle>
-              <CardDescription>{t("analytics.lollipop_desc")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto -mx-2 md:mx-0">
-                <div style={{ minWidth: 500, height: Math.max(400, lollipopData.length * 36 + 60) }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={lollipopData} layout="vertical" margin={{ left: 10, right: 50, top: 10, bottom: 10 }}>
-                      <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="hsl(var(--border))" />
-                      <XAxis type="number" tick={{ fontSize: 11 }} />
-                      <YAxis dataKey="name" type="category" width={60} tick={{ fontSize: 11 }} />
-                      <Tooltip formatter={(v: number) => [`${v}건`, "제도 수"]} />
-                      <ReferenceLine x={avg} stroke="#CBD5E1" strokeDasharray="5 5"
-                        label={{ value: `평균 ${avg}`, position: "insideTopRight", fontSize: 10, fill: "#94A3B8" }} />
-                      <Bar dataKey="count" barSize={10} radius={[0, 6, 6, 0]} label={{ position: "right", fontSize: 11 }}>
-                        {lollipopData.map((d, i) => (
-                          <Cell key={i} fill={d.count >= avg ? "#4CAF82" : "#E8917F"} />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-              {topRegion && bottomRegion && (
-                <p className="mt-3 text-center text-sm text-muted-foreground">
-                  {topRegion.name}({topRegion.count}건)과 {bottomRegion.name}({bottomRegion.count}건)의 격차: <span className="font-bold text-coral-deep">{topRegion.count > 0 && bottomRegion.count > 0 ? Math.round(topRegion.count / bottomRegion.count) : "∞"}배</span>
-                </p>
-              )}
-            </CardContent>
-          </Card>
 
           {/* Section 3: Heatmap */}
           <Card className="mb-10 rounded-2xl shadow-card">
