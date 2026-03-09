@@ -303,6 +303,12 @@ const en: Record<TranslationKey, string> = {
   "analytics.heatmap_title": "Where Are the Gaps?",
   "analytics.heatmap_desc": "Region × Category heatmap · ✕ = zero programs",
   "analytics.donut_title": "Cost Distribution",
+  "analytics.free": "Free",
+  "analytics.paid": "Paid",
+  "analytics.other": "Other",
+  "analytics.category_distribution": "Category Distribution",
+  "analytics.region": "Region",
+  "analytics.count_suffix": "",
   "analytics.source": "Data: Public Data Portal, Local gov websites, Easy Law Info",
   "analytics.updated": "Last updated: March 2026",
 
