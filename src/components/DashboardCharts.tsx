@@ -185,9 +185,9 @@ export function DashboardCharts() {
                         <PolarAngleAxis dataKey="category" tick={{ fontSize: 12 }} />
                         <PolarRadiusAxis tick={{ fontSize: 10 }} />
                         <Radar name={shorten(region1)} dataKey={region1}
-                          stroke="#E8917F" fill="#E8917F" fillOpacity={0.4} strokeWidth={2} />
+                          stroke="#E8889E" fill="#E8889E" fillOpacity={0.4} strokeWidth={2} />
                         <Radar name={shorten(region2)} dataKey={region2}
-                          stroke="#4A7EC2" fill="#4A7EC2" fillOpacity={0.3} strokeWidth={2} />
+                          stroke="#7BA4D9" fill="#7BA4D9" fillOpacity={0.3} strokeWidth={2} />
                         <Legend wrapperStyle={{ fontSize: 12 }} />
                         <Tooltip />
                       </RadarChart>
