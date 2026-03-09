@@ -455,6 +455,12 @@ const vi: Record<TranslationKey, string> = {
   "analytics.heatmap_title": "Thiếu ở đâu?",
   "analytics.heatmap_desc": "Bản đồ nhiệt · ✕ = 0 chương trình",
   "analytics.donut_title": "Phân bổ chi phí",
+  "analytics.free": "Miễn phí",
+  "analytics.paid": "Trả phí",
+  "analytics.other": "Khác",
+  "analytics.category_distribution": "Phân bổ danh mục",
+  "analytics.region": "Khu vực",
+  "analytics.count_suffix": "",
   "analytics.source": "Nguồn: Cổng dữ liệu công, Trang web chính quyền",
   "analytics.updated": "Cập nhật: Tháng 3/2026",
 
