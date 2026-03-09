@@ -52,7 +52,7 @@ function getSessionId(): string {
 function TypingIndicator({ label }: { label: string }) {
   return (
     <div className="flex items-start gap-2">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-rose-light text-lg">👩🏻‍💻</span>
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-light text-xl">👩🏻‍💻</span>
       <div className="flex items-center gap-1 rounded-2xl rounded-tl-sm border bg-card px-4 py-3 shadow-card">
         <span className="text-xs text-muted-foreground mr-2">{label}</span>
         <span className="h-2 w-2 animate-bounce rounded-full bg-lav-mid" style={{ animationDelay: "0ms" }} />
@@ -128,7 +128,7 @@ function MessageBubble({
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} gap-2`}>
       {!isUser && (
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-rose-light text-lg mt-1">👩🏻‍💻</span>
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-light text-xl mt-1">👩🏻‍💻</span>
       )}
       <div className="max-w-[85%] space-y-3 md:max-w-[75%]">
         {message.is_emergency && (
