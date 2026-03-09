@@ -489,7 +489,7 @@ const vi: Record<TranslationKey, string> = {
   "cat.living": "Hỗ trợ sinh hoạt",
   "cat.community": "Cộng đồng",
 
-  "chat.welcome": "Xin chào! Tôi là **Ansimi**, trợ lý AI hỗ trợ an toàn 🏠\n\nHãy cho tôi biết khu vực và tình huống của bạn, tôi sẽ tìm chương trình phù hợp.",
+  "chat.welcome": "Xin chào! Tôi là **ANSIL**, trợ lý AI hỗ trợ an toàn 🏠\n\nHãy cho tôi biết khu vực và tình huống của bạn, tôi sẽ tìm chương trình phù hợp.",
   "chat.typing": "Đang tìm kiếm...",
   "chat.placeholder": "Hỏi tôi bất cứ điều gì...",
   "chat.error": "Xin lỗi, vui lòng thử lại sau.",
