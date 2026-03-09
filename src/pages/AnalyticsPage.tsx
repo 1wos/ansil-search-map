@@ -141,12 +141,13 @@ const AnalyticsPage = () => {
           </div>
 
           {/* Key Stats */}
-          <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
             {[
               { icon: FileText, label: t("analytics.stat_total"), value: totalPrograms, suffix: t("common.count_suffix"), bg: "bg-sky-light", iconColor: "text-sky-deep", valueColor: "text-sky-deep" },
               { icon: MapPin, label: t("analytics.stat_regions"), value: totalRegions, suffix: t("common.region_count_suffix"), bg: "bg-lav-light", iconColor: "text-lav-deep", valueColor: "text-lav-deep" },
               { icon: Gift, label: t("analytics.stat_free"), value: freePct, suffix: "%", bg: "bg-rose-light", iconColor: "text-rose-deep", valueColor: "text-rose-deep" },
               { icon: CheckCircle, label: t("analytics.stat_open"), value: openPct, suffix: "%", bg: "bg-peach-light", iconColor: "text-peach-deep", valueColor: "text-peach-deep" },
+              { icon: TrendingUp, label: t("analytics.sai_title"), value: saiData.avg, suffix: t("analytics.sai_national_avg"), bg: "bg-coral-light", iconColor: "text-coral-deep", valueColor: "text-coral-deep" },
             ].map((item, i) => (
               <Card key={i} className="overflow-hidden rounded-2xl border-none shadow-card">
                 <CardContent className="p-4 md:p-6">
