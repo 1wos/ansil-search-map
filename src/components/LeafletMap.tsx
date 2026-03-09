@@ -101,9 +101,10 @@ export function LeafletMap({ selectedRegion, onRegionClick, programCounts }: Lea
       zoomControl: true,
     });
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
       maxZoom: 19,
+      subdomains: "abcd",
     }).addTo(map);
 
     mapInstanceRef.current = map;
@@ -246,6 +247,16 @@ export function LeafletMap({ selectedRegion, onRegionClick, programCounts }: Lea
 
       <style>{`
         .leaflet-marker-custom { background: none !important; border: none !important; }
+        .leaflet-tile-pane { filter: hue-rotate(-15deg) saturate(0.3) brightness(1.05) sepia(0.15); }
+        .leaflet-control-attribution { opacity: 0.5; font-size: 10px; }
+        .leaflet-control-zoom a {
+          background: white !important;
+          color: #D4637A !important;
+          border-color: #FCEAEF !important;
+        }
+        .leaflet-control-zoom a:hover {
+          background: #FCEAEF !important;
+        }
       `}</style>
     </div>
   );
