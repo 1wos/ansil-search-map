@@ -157,6 +157,17 @@ const ko = {
   "analytics.count_suffix": "건",
   "analytics.source": "데이터 출처: 공공데이터포털, 각 지자체 홈페이지, 찾기쉬운 생활법령정보",
   "analytics.updated": "최종 업데이트: 2026년 3월",
+  "analytics.sai_title": "지원 접근성 지수",
+  "analytics.sai_national_avg": "전국 평균",
+  "analytics.sai_ranking_title": "지역별 지원 접근성 순위",
+  "analytics.sai_ranking_desc": "지원제도의 규모·무료비율·신청가능비율·다양성을 종합한 접근성 지수",
+  "analytics.sai_col_region": "지역",
+  "analytics.sai_col_index": "접근성 지수",
+  "analytics.sai_col_grade": "등급",
+  "analytics.sai_grade_very_high": "매우 높음",
+  "analytics.sai_grade_normal": "보통",
+  "analytics.sai_grade_low": "낮음",
+  "analytics.sai_grade_very_low": "매우 낮음",
 
   // Safety Facilities
   "safety.tab_title": "안심시설",
