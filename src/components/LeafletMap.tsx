@@ -3,6 +3,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { getFacilitiesByRegion } from "@/data/safetyFacilities";
 import type { SafetyLocker, GuardianHouse } from "@/data/safetyFacilities";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export interface RegionMarker {
   name: string;
@@ -76,6 +77,7 @@ interface LeafletMapProps {
 }
 
 export function LeafletMap({ selectedRegion, onRegionClick, programCounts }: LeafletMapProps) {
+  const { t } = useLanguage();
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const markersRef = useRef<L.Marker[]>([]);
@@ -232,7 +234,7 @@ export function LeafletMap({ selectedRegion, onRegionClick, programCounts }: Lea
           }`}
         >
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-sky-mid" />
-          안심택배함
+          {t("safety.lockers")}
         </button>
         <button
           onClick={() => setShowGuardians((v) => !v)}
@@ -241,7 +243,7 @@ export function LeafletMap({ selectedRegion, onRegionClick, programCounts }: Lea
           }`}
         >
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-rose-mid" />
-          안심지킴이집
+          {t("safety.guardians")}
         </button>
       </div>
 

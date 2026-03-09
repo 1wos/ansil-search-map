@@ -75,9 +75,9 @@ const AnalyticsPage = () => {
     const paid = programs.filter(p => p.cost !== "무료" && p.cost !== "미확인").length;
     const unknown = programs.length - free - paid;
     return [
-      { name: "무료", value: free, color: "hsl(213, 55%, 67%)" },
-      { name: "유료", value: paid, color: "hsl(345, 55%, 72%)" },
-      { name: "기타", value: unknown, color: "hsl(220, 9%, 80%)" },
+      { name: t("analytics.free"), value: free, color: "hsl(213, 55%, 67%)" },
+      { name: t("analytics.paid"), value: paid, color: "hsl(345, 55%, 72%)" },
+      { name: t("analytics.other"), value: unknown, color: "hsl(220, 9%, 80%)" },
     ].filter(d => d.value > 0);
   }, [programs]);
 
@@ -140,7 +140,7 @@ const AnalyticsPage = () => {
             {/* Category Distribution */}
             <Card className="rounded-2xl border-none shadow-card">
               <CardHeader className="pb-2">
-                <CardTitle className="text-base font-semibold">카테고리 분포</CardTitle>
+                <CardTitle className="text-base font-semibold">{t("analytics.cat_distribution")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-4">

@@ -162,6 +162,29 @@ const ko = {
   "safety.places_suffix": "곳",
   "safety.no_facilities": "이 지역에 등록된 안심시설이 없습니다.",
 
+  // Map extras
+  "map.tap_to_select": "다시 탭하여 선택",
+  "map.count_unit": "건",
+  "map.placeholder_text": "여기에 전국 지도가 들어갑니다",
+  "map.placeholder_phase": "Phase A-2에서 SVG 인터랙티브 지도 구현 예정",
+
+  // Stats
+  "stats.programs": "지원제도",
+  "stats.regions": "광역시·도",
+  "stats.categories": "카테고리",
+  "stats.households": "대상 가구",
+
+  // Analytics extras
+  "analytics.cat_distribution": "카테고리 분포",
+  "analytics.free": "무료",
+  "analytics.paid": "유료",
+  "analytics.other": "기타",
+
+  // Emergency
+  "chat.emergency_label": "긴급 연락처:",
+  "chat.emergency_police": "경찰 112",
+  "chat.emergency_women": "여성긴급전화 1366",
+
   // NotFound
   "notfound.title": "404",
   "notfound.message": "페이지를 찾을 수 없습니다",
@@ -311,6 +334,25 @@ const en: Record<TranslationKey, string> = {
   "safety.places_suffix": " places",
   "safety.no_facilities": "No safety facilities registered in this region.",
 
+  "map.tap_to_select": "Tap again to select",
+  "map.count_unit": "",
+  "map.placeholder_text": "Nationwide map goes here",
+  "map.placeholder_phase": "Interactive SVG map planned for Phase A-2",
+
+  "stats.programs": "Programs",
+  "stats.regions": "Regions",
+  "stats.categories": "Categories",
+  "stats.households": "Target households",
+
+  "analytics.cat_distribution": "Category Distribution",
+  "analytics.free": "Free",
+  "analytics.paid": "Paid",
+  "analytics.other": "Other",
+
+  "chat.emergency_label": "Emergency:",
+  "chat.emergency_police": "Police 112",
+  "chat.emergency_women": "Women's Hotline 1366",
+
   "notfound.title": "404",
   "notfound.message": "Oops! Page not found",
   "notfound.back": "Return to Home",
@@ -457,6 +499,25 @@ const vi: Record<TranslationKey, string> = {
   "safety.places_suffix": " nơi",
   "safety.no_facilities": "Không có cơ sở an toàn nào trong khu vực này.",
 
+  "map.tap_to_select": "Nhấn lại để chọn",
+  "map.count_unit": "",
+  "map.placeholder_text": "Bản đồ toàn quốc ở đây",
+  "map.placeholder_phase": "Bản đồ SVG tương tác dự kiến Phase A-2",
+
+  "stats.programs": "Chương trình",
+  "stats.regions": "Khu vực",
+  "stats.categories": "Danh mục",
+  "stats.households": "Hộ gia đình",
+
+  "analytics.cat_distribution": "Phân bổ danh mục",
+  "analytics.free": "Miễn phí",
+  "analytics.paid": "Có phí",
+  "analytics.other": "Khác",
+
+  "chat.emergency_label": "Liên hệ khẩn cấp:",
+  "chat.emergency_police": "Cảnh sát 112",
+  "chat.emergency_women": "Đường dây nóng phụ nữ 1366",
+
   "notfound.title": "404",
   "notfound.message": "Không tìm thấy trang",
   "notfound.back": "Về trang chủ",
@@ -602,6 +663,25 @@ const zh: Record<TranslationKey, string> = {
   "safety.total_facilities": "安心设施",
   "safety.places_suffix": "处",
   "safety.no_facilities": "该地区暂无登记的安心设施。",
+
+  "map.tap_to_select": "再次点击选择",
+  "map.count_unit": "个",
+  "map.placeholder_text": "全国地图将在此显示",
+  "map.placeholder_phase": "Phase A-2 将实现交互式SVG地图",
+
+  "stats.programs": "支援制度",
+  "stats.regions": "覆盖地区",
+  "stats.categories": "类别",
+  "stats.households": "目标家庭",
+
+  "analytics.cat_distribution": "类别分布",
+  "analytics.free": "免费",
+  "analytics.paid": "收费",
+  "analytics.other": "其他",
+
+  "chat.emergency_label": "紧急联系：",
+  "chat.emergency_police": "警察 112",
+  "chat.emergency_women": "女性紧急电话 1366",
 
   "notfound.title": "404",
   "notfound.message": "页面未找到",

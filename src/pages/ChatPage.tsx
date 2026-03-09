@@ -132,7 +132,7 @@ function MessageBubble({
           <div className="flex items-center gap-2 rounded-xl bg-destructive/10 border border-destructive/30 px-4 py-3">
             <AlertTriangle className="h-5 w-5 shrink-0 text-destructive" />
             <div className="text-sm font-semibold text-destructive">
-              🚨 긴급 연락처: <a href="tel:112" className="underline">경찰 112</a> | <a href="tel:1366" className="underline">여성긴급전화 1366</a>
+              🚨 {t("chat.emergency_label")} <a href="tel:112" className="underline">{t("chat.emergency_police")}</a> | <a href="tel:1366" className="underline">{t("chat.emergency_women")}</a>
             </div>
           </div>
         )}

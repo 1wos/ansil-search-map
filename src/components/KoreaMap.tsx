@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const regionPaths: { id: string; d: string; cx: number; cy: number }[] = [
   { id: "seoul", d: "M185,165 L200,158 L215,162 L218,175 L210,185 L195,188 L185,180Z", cx: 200, cy: 173 },
@@ -39,6 +40,7 @@ const regionNames: Record<string, string> = {
 };
 
 export function KoreaMap({ selectedRegion, onRegionClick, programCounts }: KoreaMapProps) {
+  const { t } = useLanguage();
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const [tappedRegion, setTappedRegion] = useState<string | null>(null);
@@ -147,9 +149,9 @@ export function KoreaMap({ selectedRegion, onRegionClick, programCounts }: Korea
               : undefined
           }
         >
-          {regionNames[activeTooltip]}: {programCounts[activeTooltip] || 0}건
+          {regionNames[activeTooltip]}: {programCounts[activeTooltip] || 0}{t("map.count_unit")}
           {tappedRegion && !hoveredRegion && (
-            <span className="ml-1 opacity-60">· 다시 탭하여 선택</span>
+            <span className="ml-1 opacity-60">· {t("map.tap_to_select")}</span>
           )}
         </div>
       )}
