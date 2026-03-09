@@ -129,9 +129,7 @@ function MessageBubble({
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} gap-2`}>
       {!isUser && (
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-rose-mid to-peach-mid mt-1">
-          <MessageCircle className="h-4 w-4 text-white" />
-        </div>
+        <img src={ansimiAvatar} alt="안심이" className="h-8 w-8 shrink-0 rounded-full object-cover mt-1" />
       )}
       <div className="max-w-[85%] space-y-3 md:max-w-[75%]">
         {message.is_emergency && (
