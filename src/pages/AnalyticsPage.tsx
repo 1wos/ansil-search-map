@@ -297,6 +297,7 @@ function HeatmapSection({
 }
 
 
+const AnalyticsPage = () => {
   const { t } = useLanguage();
   const { data: programs = [] } = useAllPrograms();
   const { data: stats = [], isLoading } = useRegionStatsRPC();
