@@ -167,7 +167,7 @@ const AnalyticsPage = () => {
                             <Icon className="h-3 w-3" />
                             <span className="font-medium">{d.name}</span>
                           </div>
-                          <span className="text-muted-foreground">{d.value}건</span>
+                          <span className="text-muted-foreground">{d.value}{t("analytics.count_suffix")}</span>
                         </div>
                       );
                     })}
