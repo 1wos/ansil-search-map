@@ -31,7 +31,7 @@ const Index = () => {
                   {t("nav.analytics")}
                 </h3>
                 <p className="mt-0.5 text-sm text-muted-foreground">
-                  {t("analytics.subtitle")}
+                  {t("analytics.page_subtitle")}
                 </p>
               </div>
             </div>
