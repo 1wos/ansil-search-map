@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CAT_LABEL_KEY } from "@/utils/categoryMap";
+import { ChartTooltip } from "@/components/ui/chart-tooltip";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -146,7 +147,7 @@ export function DashboardCharts() {
                         <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                         <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} height={50} />
                         <YAxis tick={{ fontSize: 11 }} />
-                        <Tooltip formatter={(v: number, name: string) => [v, CAT_LABEL_KEY[name] ? t(CAT_LABEL_KEY[name]) : name]} />
+                        <Tooltip content={<ChartTooltip valueFormatter={(v: number, name: string) => [v, CAT_LABEL_KEY[name] ? t(CAT_LABEL_KEY[name]) : name]} />} />
                         <Legend wrapperStyle={{ fontSize: 11 }} formatter={(value: string) => CAT_LABEL_KEY[value] ? t(CAT_LABEL_KEY[value]) : value} />
                         {CAT_KEYS.map(cat => (
                           <Bar key={cat} dataKey={cat} stackId="a" fill={CAT_COLORS[cat]} />
@@ -194,7 +195,7 @@ export function DashboardCharts() {
                         <Radar name={shorten(region2)} dataKey={region2}
                           stroke="#7BA4D9" fill="#7BA4D9" fillOpacity={0.3} strokeWidth={2} />
                         <Legend wrapperStyle={{ fontSize: 12 }} />
-                        <Tooltip formatter={(v: number, name: string) => [v, CAT_LABEL_KEY[name] ? t(CAT_LABEL_KEY[name]) : name]} />
+                        <Tooltip content={<ChartTooltip valueFormatter={(v: number, name: string) => [v, CAT_LABEL_KEY[name] ? t(CAT_LABEL_KEY[name]) : name]} />} />
                       </RadarChart>
                     </ResponsiveContainer>
                   </div>
