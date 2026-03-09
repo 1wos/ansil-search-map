@@ -358,6 +358,8 @@ const en: Record<TranslationKey, string> = {
   "analytics.stat_regions": "Regions Covered",
   "analytics.stat_free": "Free Programs",
   "analytics.stat_open": "Open for Apply",
+  "analytics.sai_desc": "A composite index of scale, free ratio, availability, and category diversity.",
+  "analytics.program_structure_title": "Program Structure",
   "analytics.heatmap_title": "Where Are the Gaps?",
   "analytics.heatmap_desc": "Region × Category heatmap · ✕ = zero programs",
   "analytics.donut_title": "Cost Distribution",
