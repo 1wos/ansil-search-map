@@ -7,6 +7,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
+import { ChartTooltip } from "@/components/ui/chart-tooltip";
 import { FileText, MapPin, Gift, CheckCircle, Home, Shield, ShoppingBag, Heart, Users } from "lucide-react";
 
 const CAT_META: { key: string; icon: React.ElementType; chipActive: string; chipInactive: string; hsl: string }[] = [
@@ -154,7 +155,7 @@ const AnalyticsPage = () => {
                             <Cell key={i} fill={entry.color} />
                           ))}
                         </Pie>
-                        <Tooltip formatter={(v: number, name: string) => [`${v}${t("analytics.count_suffix")}`, name]} />
+                        <Tooltip content={<ChartTooltip valueFormatter={(v: number, name: string) => [`${v}${t("analytics.count_suffix")}`, CAT_LABEL_KEY[name] ? t(CAT_LABEL_KEY[name]) : name]} />} />
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
@@ -193,7 +194,7 @@ const AnalyticsPage = () => {
                             <Cell key={i} fill={entry.color} />
                           ))}
                         </Pie>
-                        <Tooltip formatter={(v: number, name: string) => [`${v}${t("analytics.count_suffix")}`, name]} />
+                        <Tooltip content={<ChartTooltip valueFormatter={(v: number, name: string) => [`${v}${t("analytics.count_suffix")}`, name]} />} />
                         <text x="50%" y="46%" textAnchor="middle" dominantBaseline="central"
                           className="fill-foreground text-xl font-bold">{freePct}%</text>
                         <text x="50%" y="58%" textAnchor="middle" dominantBaseline="central"
