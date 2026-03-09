@@ -8,7 +8,7 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
 import { ChartTooltip } from "@/components/ui/chart-tooltip";
-import { FileText, MapPin, Gift, CheckCircle, Home, Shield, ShoppingBag, Heart, Users, TrendingUp, Trophy, TrendingDown, ChevronDown, ChevronUp, Check, X } from "lucide-react";
+import { FileText, MapPin, Gift, CheckCircle, Home, Shield, ShoppingBag, Heart, Users, TrendingUp, Trophy, TrendingDown, ChevronDown, ChevronUp, Check, X, BarChart3 } from "lucide-react";
 
 const CAT_META: { key: string; icon: React.ElementType; chipActive: string; chipInactive: string; hsl: string }[] = [
   { key: "주거안전", icon: Home, chipActive: "bg-sky-mid text-white", chipInactive: "bg-sky-light text-sky-deep border border-sky-mid/30", hsl: "hsl(213, 55%, 67%)" },
@@ -101,7 +101,7 @@ function SAIRankingSection({ saiData, t }: { saiData: { rows: { region: string; 
             )}
           </div>
           <div className="rounded-xl bg-muted/60 p-3 text-center">
-            <TrendingUp className="mx-auto mb-1.5 h-4 w-4 text-foreground" />
+            <BarChart3 className="mx-auto mb-1.5 h-4 w-4 text-foreground" />
             <p className="text-[10px] text-muted-foreground">{t("analytics.sai_national_avg")}</p>
             <p className="text-lg font-bold text-foreground">{saiData.avg}</p>
           </div>
