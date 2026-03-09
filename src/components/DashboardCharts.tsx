@@ -147,7 +147,7 @@ export function DashboardCharts() {
                         <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                         <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} height={50} />
                         <YAxis tick={{ fontSize: 11 }} />
-                        <Tooltip formatter={(v: number, name: string) => [v, CAT_LABEL_KEY[name] ? t(CAT_LABEL_KEY[name]) : name]} />
+                        <Tooltip content={<ChartTooltip valueFormatter={(v: number, name: string) => [v, CAT_LABEL_KEY[name] ? t(CAT_LABEL_KEY[name]) : name]} />} />
                         <Legend wrapperStyle={{ fontSize: 11 }} formatter={(value: string) => CAT_LABEL_KEY[value] ? t(CAT_LABEL_KEY[value]) : value} />
                         {CAT_KEYS.map(cat => (
                           <Bar key={cat} dataKey={cat} stackId="a" fill={CAT_COLORS[cat]} />
