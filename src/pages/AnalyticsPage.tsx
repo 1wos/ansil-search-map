@@ -225,7 +225,7 @@ const AnalyticsPage = () => {
                 <table className="w-full min-w-[520px] border-collapse text-xs md:text-sm">
                   <thead>
                     <tr>
-                      <th className="p-2 text-left font-medium text-muted-foreground">지역</th>
+                      <th className="p-2 text-left font-medium text-muted-foreground">{t("analytics.region")}</th>
                       {CAT_META.map(cat => {
                         const Icon = cat.icon;
                         return (
