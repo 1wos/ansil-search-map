@@ -126,13 +126,18 @@ function MessageBubble({
   const isUser = message.role === "user";
 
   return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"} gap-2`}>
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"} gap-3`}>
       {!isUser && (
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-light text-xl mt-1">👩🏻‍💻</span>
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-light text-xl mt-1 shadow-sm">👩🏻‍💻</span>
       )}
-      <div className="max-w-[85%] space-y-3 md:max-w-[75%]">
+      <div className="max-w-[85%] space-y-2.5 md:max-w-[72%]">
+        {/* 안심이 이름 표시 (봇 메시지만) */}
+        {!isUser && (
+          <span className="ml-1 text-xs font-semibold text-muted-foreground">안심이</span>
+        )}
+
         {message.is_emergency && (
-          <div className="flex items-center gap-2 rounded-xl bg-destructive/10 border border-destructive/30 px-4 py-3">
+          <div className="flex items-center gap-2 rounded-2xl bg-destructive/10 border border-destructive/30 px-4 py-3">
             <AlertTriangle className="h-5 w-5 shrink-0 text-destructive" />
             <div className="text-sm font-semibold text-destructive">
               🚨 {t("chat.emergency_label")} <a href="tel:112" className="underline">{t("chat.emergency_police")}</a> | <a href="tel:1366" className="underline">{t("chat.emergency_women")}</a>
@@ -141,14 +146,21 @@ function MessageBubble({
         )}
 
         <div
-          className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+          className={`relative px-4 py-3 text-sm leading-relaxed ${
             isUser
-              ? "rounded-tr-sm bg-rose-light text-card-foreground"
-              : "rounded-tl-sm border border-rose-light/50 bg-card text-card-foreground shadow-card"
+              ? "rounded-2xl rounded-br-md bg-gradient-to-br from-rose-mid to-rose-deep text-white shadow-md"
+              : "rounded-2xl rounded-bl-md border border-border/60 bg-card text-card-foreground shadow-card"
           }`}
         >
+          {/* 말풍선 꼬리 */}
           {isUser ? (
-            message.content
+            <div className="absolute -right-1.5 bottom-2 h-3 w-3 rotate-45 bg-rose-deep" />
+          ) : (
+            <div className="absolute -left-1.5 top-3 h-3 w-3 rotate-45 border-l border-b border-border/60 bg-card" />
+          )}
+
+          {isUser ? (
+            <span>{message.content}</span>
           ) : (
             <div className="prose prose-sm max-w-none">
               <ReactMarkdown
@@ -185,19 +197,19 @@ function MessageBubble({
           <div className="flex items-center gap-1">
             <button
               onClick={() => onFeedback(message.id, "up")}
-              className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl p-2.5 transition-colors ${
-                message.feedback === "up" ? "bg-sky-light text-sky-deep" : "text-muted-foreground/40 hover:text-muted-foreground"
+              className={`flex min-h-[40px] min-w-[40px] items-center justify-center rounded-full p-2 transition-colors ${
+                message.feedback === "up" ? "bg-sky-light text-sky-deep" : "text-muted-foreground/40 hover:text-muted-foreground hover:bg-muted/50"
               }`}
             >
-              <ThumbsUp className="h-4 w-4" />
+              <ThumbsUp className="h-3.5 w-3.5" />
             </button>
             <button
               onClick={() => onFeedback(message.id, "down")}
-              className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl p-2.5 transition-colors ${
-                message.feedback === "down" ? "bg-coral-light text-coral-deep" : "text-muted-foreground/40 hover:text-muted-foreground"
+              className={`flex min-h-[40px] min-w-[40px] items-center justify-center rounded-full p-2 transition-colors ${
+                message.feedback === "down" ? "bg-coral-light text-coral-deep" : "text-muted-foreground/40 hover:text-muted-foreground hover:bg-muted/50"
               }`}
             >
-              <ThumbsDown className="h-4 w-4" />
+              <ThumbsDown className="h-3.5 w-3.5" />
             </button>
           </div>
         )}
