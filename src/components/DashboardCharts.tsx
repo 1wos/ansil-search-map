@@ -11,12 +11,13 @@ import {
   Treemap, ResponsiveContainer, ReferenceLine, Cell,
 } from "recharts";
 
+// Pastel palette: Sky, Lavender, Rose, Coral, Peach
 const CAT_COLORS: Record<string, string> = {
-  주거안전: "#E8917F",
-  귀가안전: "#4A7EC2",
-  생활지원: "#F5A86E",
-  건강: "#4CAF82",
-  커뮤니티: "#C48DB0",
+  주거안전: "#E8917F",   // coral-mid
+  귀가안전: "#7BA4D9",   // sky-mid
+  생활지원: "#F5A86E",   // peach-mid
+  건강: "#E8889E",       // rose-mid
+  커뮤니티: "#C48DB0",   // lav-mid
 };
 const CAT_KEYS = ["주거안전", "귀가안전", "생활지원", "건강", "커뮤니티"];
 const STAT_MAP: Record<string, string> = {
