@@ -1170,6 +1170,8 @@ const mn: Record<TranslationKey, string> = {
   "analytics.stat_regions": "Бүс нутаг",
   "analytics.stat_free": "Үнэгүй хөтөлбөр",
   "analytics.stat_open": "Өргөдөлд нээлттэй",
+  "analytics.sai_desc": "Хэмжээ, үнэгүй, нээлттэй, олон янзын нэгдсэн индекс.",
+  "analytics.program_structure_title": "Хөтөлбөрийн бүтэц",
   "analytics.heatmap_title": "Хаана дутагдалтай?",
   "analytics.heatmap_desc": "Бүс нутаг × Ангилал · ✕ = 0 хөтөлбөр",
   "analytics.donut_title": "Зардлын хуваарилалт",
