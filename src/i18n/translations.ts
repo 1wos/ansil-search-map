@@ -147,6 +147,12 @@ const ko = {
   "analytics.heatmap_title": "우리 지역에 빠진 지원은?",
   "analytics.heatmap_desc": "✕ 표시가 있는 곳은 아직 해당 분야 지원제도가 없는 지역이에요",
   "analytics.donut_title": "비용 분포",
+  "analytics.free": "무료",
+  "analytics.paid": "유료",
+  "analytics.other": "기타",
+  "analytics.category_distribution": "카테고리 분포",
+  "analytics.region": "지역",
+  "analytics.count_suffix": "건",
   "analytics.source": "데이터 출처: 공공데이터포털, 각 지자체 홈페이지, 찾기쉬운 생활법령정보",
   "analytics.updated": "최종 업데이트: 2026년 3월",
 
