@@ -134,7 +134,7 @@ export function KoreaMap({ selectedRegion, onRegionClick, programCounts }: Korea
 
       {activeTooltip && (
         <div
-          className={`pointer-events-none absolute z-10 rounded-xl bg-foreground px-3 py-1.5 text-xs font-medium text-white shadow-lg ${
+          className={`pointer-events-none absolute z-10 min-w-[140px] rounded-lg border border-border bg-card px-4 py-3 shadow-lg animate-in fade-in-0 zoom-in-95 ${
             tappedRegion && !hoveredRegion
               ? "left-1/2 -translate-x-1/2 bottom-2"
               : ""
@@ -149,9 +149,16 @@ export function KoreaMap({ selectedRegion, onRegionClick, programCounts }: Korea
               : undefined
           }
         >
-          {regionNames[activeTooltip]}: {programCounts[activeTooltip] || 0}{t("map.count_unit")}
+          {/* Arrow */}
+          {hoveredRegion && (
+            <div className="absolute -bottom-[5px] left-4 h-[10px] w-[10px] rotate-45 border-b border-r border-border bg-card" />
+          )}
+          <p className="text-xs font-semibold text-card-foreground">{regionNames[activeTooltip]}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            {programCounts[activeTooltip] || 0}{t("map.count_unit")}
+          </p>
           {tappedRegion && !hoveredRegion && (
-            <span className="ml-1 opacity-60">· {t("map.tap_to_select")}</span>
+            <p className="text-[10px] text-muted-foreground/60 mt-1">{t("map.tap_to_select")}</p>
           )}
         </div>
       )}

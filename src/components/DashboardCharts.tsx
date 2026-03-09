@@ -195,7 +195,7 @@ export function DashboardCharts() {
                         <Radar name={shorten(region2)} dataKey={region2}
                           stroke="#7BA4D9" fill="#7BA4D9" fillOpacity={0.3} strokeWidth={2} />
                         <Legend wrapperStyle={{ fontSize: 12 }} />
-                        <Tooltip formatter={(v: number, name: string) => [v, CAT_LABEL_KEY[name] ? t(CAT_LABEL_KEY[name]) : name]} />
+                        <Tooltip content={<ChartTooltip valueFormatter={(v: number, name: string) => [v, CAT_LABEL_KEY[name] ? t(CAT_LABEL_KEY[name]) : name]} />} />
                       </RadarChart>
                     </ResponsiveContainer>
                   </div>
