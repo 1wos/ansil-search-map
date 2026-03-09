@@ -14,7 +14,7 @@ const ko = {
   "nav.ai_chat": "AI 상담",
   "nav.map": "지도",
   "nav.programs": "지원제도",
-  "nav.home": "안심찾기",
+  "nav.home": "안실 ANSIL",
   "nav.menu_open": "메뉴 열기",
   "nav.menu_close": "메뉴 닫기",
   "nav.analytics": "현황분석",
