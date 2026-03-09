@@ -405,8 +405,9 @@ const AnalyticsPage = () => {
                   </div>
                   <p className="text-xs text-muted-foreground">{item.label}</p>
                   <p className={`text-2xl font-bold ${item.valueColor} md:text-3xl`}>
-                    {item.value}<span className="ml-0.5 text-sm font-normal text-muted-foreground">{item.suffix}</span>
+                    {item.value}
                   </p>
+                  {item.suffix && <p className="text-xs text-muted-foreground">{item.suffix}</p>}
                 </CardContent>
               </Card>
             ))}
