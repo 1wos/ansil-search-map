@@ -128,7 +128,7 @@ function MessageBubble({
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} gap-2`}>
       {!isUser && (
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-rose-light text-lg mt-1">👩🏻‍💻</span>
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-light text-xl mt-1">👩🏻‍💻</span>
       )}
       <div className="max-w-[85%] space-y-3 md:max-w-[75%]">
         {message.is_emergency && (
