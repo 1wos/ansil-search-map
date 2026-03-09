@@ -561,6 +561,8 @@ const vi: Record<TranslationKey, string> = {
   "analytics.stat_regions": "Khu vực",
   "analytics.stat_free": "Miễn phí",
   "analytics.stat_open": "Đang mở",
+  "analytics.sai_desc": "Chỉ số tổng hợp quy mô, miễn phí, khả dụng và đa dạng danh mục.",
+  "analytics.program_structure_title": "Cấu trúc chương trình",
   "analytics.heatmap_title": "Thiếu ở đâu?",
   "analytics.heatmap_desc": "Bản đồ nhiệt · ✕ = 0 chương trình",
   "analytics.donut_title": "Phân bổ chi phí",
