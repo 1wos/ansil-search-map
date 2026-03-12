@@ -1,73 +1,71 @@
-# Welcome to your Lovable project
+# ANSIL (안실)
 
-## Project info
+> AI-powered platform that aggregates scattered safety support programs and facilities for women living alone in Korea, helping users find what fits their needs.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+[![Live Demo](https://img.shields.io/badge/Live_Demo-ansil.lovable.app-E8889E?style=for-the-badge)](https://ansil.lovable.app)
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Problem
 
-**Use Lovable**
+Support programs for women living alone in Korea are scattered across 17 regional governments — with no unified way to find them. Language barriers further exclude foreign residents from accessing these resources.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Solution
 
-Changes made via Lovable will be committed automatically to this repo.
+ANSIL brings all regional safety programs and facilities into one platform — searchable by map, filterable by category, and powered by an AI assistant that recommends programs tailored to each user's situation. The platform supports 6 languages (Korean, English, Vietnamese, Chinese, Uzbek, Mongolian).
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Key Features
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Interactive Policy Map
+- Choropleth map of all 17 metropolitan regions with program density visualization
+- Click any region to view category breakdown and nearby safety facilities (smart lockers, guardian houses)
+- Region detail pages with full program listings
 
-Follow these steps:
+### AI Support Assistant (안실)
+- LLM-powered chatbot that understands user situations and recommends relevant programs
+- Emergency detection with direct links to 112 (police) and 1366 (women's hotline)
+- Program cards with one-tap apply links and contact info
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Policy Accessibility Analysis
+- SAI (Support Accessibility Index) scoring across regions
+- Stacked bar charts, radar comparisons, treemap, and interactive heatmap
+- Regional comparison tools for data-driven insights
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Screenshots
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+| Map View | AI Chat | Analytics |
+|----------|---------|-----------|
+| ![Map](docs/screenshot-map.png) | ![Chat](docs/screenshot-chat.png) | ![Analytics](docs/screenshot-analytics.png) |
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Tech Stack
 
-**Use GitHub Codespaces**
+[![My Skills](https://skillicons.dev/icons?i=react,ts,vite,tailwind,supabase,github&theme=dark)](https://skillicons.dev)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+![Lovable](https://img.shields.io/badge/Built_with-Lovable-ff69b4?style=for-the-badge&logo=heart&logoColor=white)
 
-## What technologies are used for this project?
+![Korean](https://img.shields.io/badge/🇰🇷_한국어-222?style=flat-square)
+![English](https://img.shields.io/badge/🇺🇸_English-222?style=flat-square)
+![Vietnamese](https://img.shields.io/badge/🇻🇳_Tiếng_Việt-222?style=flat-square)
+![Chinese](https://img.shields.io/badge/🇨🇳_中文-222?style=flat-square)
+![Uzbek](https://img.shields.io/badge/🇺🇿_Oʻzbek-222?style=flat-square)
+![Mongolian](https://img.shields.io/badge/🇲🇳_Монгол-222?style=flat-square)
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Team
 
-## How can I deploy this project?
+**ITDA (잇다)**
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+## About
 
-Yes, you can!
+![SheBuilds](docs/shebuilds-poster.png)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project was built for **SheBuilds** — International Women's Day Hackathon by Lovable x Anthropic, in partnership with Womxn Who Code Korea.
